@@ -4,18 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Tennis Game</title>
   </head>
   <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
+
     <script>
+      let canvas;
+      let canvasContext;
+      let ballX = 50;
+      let ballY;
 
-      const canvas;
-      const canvasContext;
+      window.onload = function() {
+        canvas = document.getElementById("gameCanvas");
+        canvasContext = canvas.getContext("2d");
 
-      window.onload = function (){
-          canvas = document.getElementById('gameCanvas')
-      }
+        const framesPerSecond = 30;
+        setInterval(drawEverything, 1000 / framesPerSecond);
+      };
+
+      drawEverything = () => {
+        ballX = ballX + 10;
+        canvasContext.fillStyle = "black";
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+        canvasContext.fillStyle = "white";
+        canvasContext.fillRect(255, 210, 200, 200);
+        canvasContext.fillStyle = "red";
+        canvasContext.fillRect(ballX, 200, 50, 25);
+      };
     </script>
   </body>
 </html>
