@@ -12,25 +12,40 @@
     <script>
       let canvas;
       let canvasContext;
-      let ballX = 50;
-      let ballY;
+      let ballX = 0;
+      let ballSpeedX = 15;
 
       window.onload = function() {
         canvas = document.getElementById("gameCanvas");
         canvasContext = canvas.getContext("2d");
 
         const framesPerSecond = 30;
-        setInterval(drawEverything, 1000 / framesPerSecond);
+        setInterval(function() {
+          moveEverything();
+          drawEverything();
+        }, 1000 / framesPerSecond);
+      };
+
+      moveEverything = () => {
+        ballX = ballX + ballSpeedX;
+        if (ballX >= canvas.width) {
+          ballSpeedX = -ballSpeedX;
+        } else if (ballX <= 0) {
+          ballSpeedX = -ballSpeedX;
+        }
       };
 
       drawEverything = () => {
-        ballX = ballX + 10;
-        canvasContext.fillStyle = "black";
-        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+        colorRect(0, 0, canvas.width, canvas.height, "black");
         canvasContext.fillStyle = "white";
         canvasContext.fillRect(0, 210, 10, 100);
         canvasContext.fillStyle = "red";
         canvasContext.fillRect(ballX, 100, 10, 15);
+      };
+
+      colorRect = (leftX, topY, width, height, drawColor) => {
+        canvasContext.fillStyle = drawColor;
+        canvasContext.fillRect(leftX, topY, width, height);
       };
     </script>
   </body>
