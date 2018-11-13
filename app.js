@@ -7,6 +7,7 @@ let ballSpeedY = 4;
 
 let paddle1Y = 250;
 let paddle2Y = 250;
+const PADDLE_THICKNESS = 10;
 const PADDLE_HEIGHT = 100;
 
 calculateMousePos = evt => {
@@ -47,13 +48,17 @@ moveEverything = () => {
   ballY = ballY + ballSpeedY;
 
   if (ballX > canvas.width) {
-    if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
+    if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
       ballSpeedX = -ballSpeedX;
     } else {
       ballReset();
     }
   } else if (ballX < 0) {
-    ballReset();
+    if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
+      ballSpeedX = -ballSpeedX;
+    } else {
+      ballReset();
+    }
   }
 
   if (ballY >= canvas.height) {
@@ -68,10 +73,16 @@ drawEverything = () => {
   colorRect(0, 0, canvas.width, canvas.height, "black");
 
   // this is left player paddle
-  colorRect(0, paddle1Y, 10, PADDLE_HEIGHT, "white");
+  colorRect(0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, "white");
 
   // this is computer player paddle
-  colorRect(790, paddle2Y, 10, PADDLE_HEIGHT, "white");
+  colorRect(
+    canvas.width - PADDLE_THICKNESS,
+    paddle2Y,
+    PADDLE_THICKNESS,
+    PADDLE_HEIGHT,
+    "white"
+  );
 
   // next line draws the ball
   colorCircle(ballX, ballY, 10, "white");
