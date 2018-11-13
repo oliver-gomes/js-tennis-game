@@ -5,6 +5,9 @@ let ballSpeedX = 10;
 let ballY = 50;
 let ballSpeedY = 4;
 
+let player1Score = 0;
+let player2Score = 0;
+
 let paddle1Y = 250;
 let paddle2Y = 250;
 const PADDLE_THICKNESS = 10;
@@ -43,21 +46,35 @@ ballReset = () => {
   ballY = canvas.height / 2;
 };
 
+computerMovement = () => {
+  let paddle2YCenter = paddle2Y + PADDLE_HEIGHT / 2;
+
+  if (paddle2Y < ballY) {
+    paddle2Y += 6;
+  } else {
+    paddle2Y -= 6;
+  }
+};
+
 moveEverything = () => {
-  ballX = ballX + ballSpeedX;
-  ballY = ballY + ballSpeedY;
+  computerMovement();
+
+  ballX += ballSpeedX;
+  ballY += ballSpeedY;
 
   if (ballX > canvas.width) {
     if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
       ballSpeedX = -ballSpeedX;
     } else {
       ballReset();
+      player2Score++;
     }
   } else if (ballX < 0) {
     if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
       ballSpeedX = -ballSpeedX;
     } else {
       ballReset();
+      player1Score++;
     }
   }
 
@@ -86,6 +103,9 @@ drawEverything = () => {
 
   // next line draws the ball
   colorCircle(ballX, ballY, 10, "white");
+
+  canvasContext.fillText(player1Score, 100, 100);
+  canvasContext.fillText(player2Score, canvas.width - 100, 100);
 };
 
 colorCircle = (centerX, centerY, radius, drawColor) => {
