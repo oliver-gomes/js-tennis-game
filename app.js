@@ -31,14 +31,14 @@ drawEverything = () => {
   colorRect(0, 210, 10, 100, "white");
 
   // next line draws the ball
-  colorCircle("blue");
-  canvasContext.beginPath();
-  canvasContext.arc(ballX, 100, 10, 0, Math.PI * 2, true);
-  canvasContext.fill();
+  colorCircle(ballX, 100, 10, "white");
 };
 
-colorCircle = color => {
-  canvasContext.fillStyle = color;
+colorCircle = (centerX, centerY, radius, drawColor) => {
+  canvasContext.fillStyle = drawColor;
+  canvasContext.beginPath();
+  canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+  canvasContext.fill();
 };
 
 colorRect = (leftX, topY, width, height, drawColor) => {
